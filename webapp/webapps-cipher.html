@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html manifest="./webapps-cipher.appcache">
+	<head>
+		<meta charset="UTF-8">
+		<title>Cipher</title>
+		<link rel="stylesheet" type="text/css" href="./libs/bootstrap/css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="./libs/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css" />
+		<link rel="stylesheet" type="text/css" href="./webapps-cipher.css" />
+	</head>
+	<body>
+
+<div id="cipher-toolbar">
+	<button id="cipher-files-button" class="btn btn-primary" title="Ajouter des fichiers">
+		<span class="glyphicon glyphicon-file"></span>
+		<span>Ajouter des fichiers</span>
+	</button>
+	<input id="cipher-files-input" type="file" multiple />
+
+	<button id="cipher-launch-button" class="btn btn-primary" title="Lancer l'opération">
+		<span class="glyphicon glyphicon-play"></span>
+		<span>Lancer l'opération</span>
+	</button>
+
+	<button id="cipher-clear-button" class="btn btn-default" title="Vider la liste">
+		<span class="glyphicon glyphicon-remove"></span>
+		<span>Vider</span>
+	</button>
+</div>
+
+<div id="cipher-passphrase-modal" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				<div class="form-group">
+					<label for="cipher-passphrase-input" class="control-label">Mot de passe</label>
+					<input id="cipher-passphrase-input" type="password" value="" class="form-control" />
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+				<button type="button" class="btn btn-primary" id="cipher-validate-button">Valider</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="cipher-progress">
+	<div aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+</div>
+
+<table id="cipher-table" class="table">
+	<thead>
+		<tr>
+			<th>Fichier</th>
+			<th>Taille</th>
+			<th>Statut</th>
+			<th>Résultat</th>
+		</tr>
+	</thead>
+	<tbody>
+	</tbody>
+	<tfoot>
+		<tr>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+	</tfoot>
+</table>
+
+<div id="cipher-copyright">
+	Développé par <a target="_blank" href="https://github.com/guillaumeprevot">Tech GP</a>,
+	grâce à <a target="_blank" href="http://jquery.com/">jQuery</a>,
+	<a target="_blank" href="http://getbootstrap.com/css/">Bootstrap</a>,
+	<a target="_blank" href="https://github.com/digitalbazaar/forge">Forge</a> et
+	<a target="_blank" href="https://github.com/nostalgiaz/bootstrap-switch">Bootstrap Switch</a>,
+	inspiré par <a target="_blank" href="http://www.filelock.org/">File Lock</a>.
+</div>
+
+		<script type="text/javascript" src="./libs/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="./libs/bootstrap/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="./libs/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+		<script type="text/javascript" src="./libs/forge/yuicompressor-forge-min.js"></script>
+		<script type="text/javascript" src="./webapps-cipher.js"></script>
+	</body>
+</html>

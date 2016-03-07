@@ -28,13 +28,21 @@ NB : quand le certificat HTTPS est incorrect, la mise en cache échouera sous Ch
 
 ![Présentation de l'IHM](./screenshots/webapps-cipher-1.png)
 
-### Récupération des fichiers chiffrés / déchiffrés
+### Saisie de la phrase de passe
 
-![Récupération des fichiers](./screenshots/webapps-cipher-2.png)
+![Saisie de la phrase de passe](./screenshots/webapps-cipher-2.png)
 
-### Interface responsive et barre de progression
+### Affichage de la progression
 
-![Interface responsive et barre de progression](./screenshots/webapps-cipher-3.png)
+![Affichage de la progression](./screenshots/webapps-cipher-3.png)
+
+### Récupération du résultat
+
+![Récupération du résultat](./screenshots/webapps-cipher-4.png)
+
+### IHM adaptée aux petits écrans
+
+![IHM adaptée aux petits écrans](./screenshots/webapps-cipher-5.png)
 
 ## Intégration à Play
 
