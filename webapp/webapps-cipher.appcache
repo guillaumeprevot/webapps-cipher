@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# Version 2016-03-07
+# Version 2016-03-18
 
 CACHE:
 ./libs/bootstrap/css/bootstrap.min.css
@@ -14,6 +14,8 @@ CACHE:
 ./libs/jquery/jquery.min.js
 ./webapps-cipher.css
 ./webapps-cipher.js
+./webapps-cipher.ico
+./webapps-cipher.png
 
 NETWORK:
 *
