@@ -44,31 +44,17 @@ NB : quand le certificat HTTPS est incorrect, la mise en cache échouera sous Ch
 
 ![IHM adaptée aux petits écrans](./screenshots/webapps-cipher-5.png)
 
-## Intégration à Play
+## Licence
 
-Pour intégrer à [Play](https://www.playframework.com/), il faut :
+Ce projet est distribué sous licence MIT, reproduite dans le fichier LICENSE ici présent.
 
-1. Déposer les 4 fichiers dans le dossier `public`
+## Changelog
 
-    - webapps-cipher.appcache
-    - webapps-cipher.css
-    - webapps-cipher.html
-    - webapps-cipher.js
+2016-03-07
+- première version
 
-2. Pour que la mise en cache se fasse, le type mime `text/cache-manifest` doit être renvoyé pour le fichier `appcache`. On ajoute donc une règle au fichier `routes`
+2016-03-18
+- ajout du favicon
 
-    ```
-    GET		/assets/webapps-cipher.appcache		controllers.Application.manifest(path: String = "webapps-cipher.appcache")
-    ```
-
-3. L'implémentation ressemble à ça :
-
-    ```java
-    public class Application extends Controller {
-
-    	public final Result manifest(String path) {
-    		return ok(Play.current().getFile("public/" + path)).as("text/cache-manifest");
-    	}
-
-    }
-    ```
+2016-06-28
+- ajout du fichier LICENCE
