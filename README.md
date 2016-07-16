@@ -13,7 +13,7 @@ L'application utilise les algorithmes suivants :
 
 Les librairies suivantes ont été utilisées pour cette application :
 
-- [jQuery 2.1.4](http://jquery.com/)
+- [jQuery 2.2.4](http://jquery.com/)
 - [Bootstrap 3.3.6](http://getbootstrap.com/css/)
 - [Forge 0.6.39](https://github.com/digitalbazaar/forge)
 - [Bootstrap Switch 3.3.2](https://github.com/nostalgiaz/bootstrap-switch)
@@ -58,3 +58,6 @@ Ce projet est distribué sous licence MIT, reproduite dans le fichier LICENSE ic
 
 2016-06-28
 - ajout du fichier LICENCE
+
+2016-07-16
+- mise à jour de jQuery (2.1.4 vers 2.2.4)
