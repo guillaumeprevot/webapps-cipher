@@ -13,10 +13,10 @@ L'application utilise les algorithmes suivants :
 
 Les librairies suivantes ont été utilisées pour cette application :
 
-- [jQuery 2.2.4](http://jquery.com/)
-- [Bootstrap 3.3.6](http://getbootstrap.com/css/)
-- [Forge 0.6.39](https://github.com/digitalbazaar/forge)
-- [Bootstrap Switch 3.3.2](https://github.com/nostalgiaz/bootstrap-switch)
+- [jQuery 3.2.1](http://jquery.com/)
+- [Bootstrap 3.3.7](http://getbootstrap.com/css/)
+- [Forge 0.6.49](https://github.com/digitalbazaar/forge)
+- [Bootstrap Switch 3.3.4](https://github.com/nostalgiaz/bootstrap-switch)
 
 L'application est fournie avec un fichier manifest `webapps-cipher.appcache` permettant la mise en cache et l'utilisation en mode déconnecté. Plus d'info chez Mozilla [en français](https://developer.mozilla.org/fr/docs/Utiliser_Application_Cache) ou [en anglais](https://developer.mozilla.org/en-US/docs/Web/HTML/Using_the_application_cache).
 
@@ -61,3 +61,6 @@ Ce projet est distribué sous licence MIT, reproduite dans le fichier LICENSE ic
 
 2016-07-16
 - mise à jour de jQuery (2.1.4 vers 2.2.4)
+
+2017-05-21
+- mise à jour de jQuery (2.2.4 en 3.2.1), Bootstrap (3.3.6 en 3.3.7), Bootstrap Switch (3.3.2 en 3.3.4) et Forge (0.6.39 en 0.6.49)
