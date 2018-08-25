@@ -54,7 +54,7 @@ function Cipher(files, passphrase, algorithm, progress, callback) {
 				if (ok)
 					callback(files[fileIndex], fileIndex, fileCipher.output.getBytes());
 				else
-					alert('Le fichier ' + files[fileIndex].name + ' est corrompu');
+					alert('Le fichier ' + files[fileIndex].name + ' est corrompu ou le mot de passe est incorrect');
 			} else {
 				var cipherText = forge.util.bytesToHex(fileSalt) // 16 bytes
 					+ '-' + fileIterations
