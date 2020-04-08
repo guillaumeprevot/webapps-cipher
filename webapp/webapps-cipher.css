@@ -1,20 +1,22 @@
 @CHARSET "UTF-8";
 
 html { width: 100%; height: 100%; }
-body { padding-top: 54px; }
+body { width: 100%; height: 100%; display: flex; flex-direction: column; }
 
-#cipher-toolbar { position: fixed; left: 0; top: 0; right: 0; padding: 10px; background-color: #333; color: white; height: 54px; }
+#cipher-toolbar { flex: none; padding: 0.4rem 0.2rem; display: flex; }
+#cipher-toolbar > * { flex: none; margin: 0 0.2rem; }
 #cipher-files-input, #cipher-launch-button, #cipher-clear-button { display: none; }
 
-#cipher-progress { display: none; margin: 10px; }
-#cipher-progress > div { width: 0; float: left; font-size: 12px; color: #fff; text-align: left; background-color: #337ab7; padding: 5px 10px; border-radius: 4px; }
+#cipher-progress { flex: none; display: none; margin: 10px; }
+#cipher-progress > div { width: 0; float: left; font-size: 12px; text-align: left; padding: 5px 10px; border-radius: 4px; }
 
-#cipher-table > tbody > tr > td > a.download { display: none; }
-#cipher-table > tbody > tr.success > td > a.download { display: inline; }
-#cipher-table > tbody > tr.success > td > .bootstrap-switch { display: none; }
+#cipher-table { flex: auto; }
+#cipher-table a.download { display: none; }
+#cipher-table .table-success a.download { display: inline; }
+#cipher-table .table-success .custom-switch { display: none; }
 
-#cipher-copyright { position: fixed; left: 0; bottom: 0; right: 0; padding: 5px 10px; background-color: white; text-align: right; font-size: smaller; }
+#cipher-copyright { flex: none; padding: 5px 10px; background-color: white; text-align: right; font-size: smaller; }
 
 @media (max-width: 767px) {
-	#cipher-toolbar > .btn > span:not(.glyphicon) { display: none; }
+	#cipher-toolbar > .btn > span { display: none; }
 }

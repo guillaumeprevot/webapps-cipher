@@ -42,7 +42,7 @@ function Cipher(files, passphrase, algorithm, progress, callback) {
 			// Update progress
 			doneSize += chunk.length;
 			if (progress)
-				progress.onprogress(doneSize, totalSize, chunk.length) 
+				progress.onprogress(doneSize, totalSize, chunk.length)
 		}
 		// Move forward
 		fileOffset += sliceSize;
@@ -119,8 +119,8 @@ function Cipher(files, passphrase, algorithm, progress, callback) {
 			var chunk = files[fileIndex].slice(0, headerSize);
 			reader.readAsArrayBuffer(chunk);
 		} else {
-			// Génération d'un sel aléatoire de 16 octets, la recommandation étant d'au moins 64 bits (https://en.wikipedia.org/wiki/PBKDF2)
-			fileSalt = forge.random.getBytesSync(16); // 16 octets
+			// Génération d'un sel aléatoire de 64 octets (8 octets recommandés mais 64 octets dans TrueCrypt et VeraCrypt)
+			fileSalt = forge.random.getBytesSync(64);
 			// Utilisation de 10 000 itérations car 1000 à l'origine mais monte d'années en années (https://en.wikipedia.org/wiki/PBKDF2)
 			fileIterations = 10000; // 10 000 itérations
 			// Création d'une clef de la taille souhaitée, en utilisation PBKDF2WithHmacSHA1
@@ -153,7 +153,7 @@ Cipher.prototype.getFileEncrypted = function(file) {
 
 /**
  * Classe responsable de l'affichage de la progression.
- * 
+ *
  * NB : on n'utilise pas les classes de Bootstrap "progress" et "progress-bar" car le dessin fait perdre un temps non négligeable (par exemple : 8.8s -> 10.8s).
  * Si toutefois on le voulait, il suffirait d'ajouter les classes aux 2 div et de retirer le style dans la feuille CSS.
  */
@@ -195,23 +195,32 @@ function addFiles(files) {
 
 	$('#cipher-launch-button, #cipher-clear-button').show();
 
+	var tbody = $('#cipher-table > table > tbody');
+	var i = tbody.children().length + 1;
 	$.each(files, function(index, file) {
 		var encrypted = Cipher.prototype.getFileEncrypted.apply(null, [file]);
 		var resultname = encrypted ? file.name.substring(0, file.name.length - 4) : (file.name + '.enc');
-
-		var tr = $('<tr />').data('file', file)
-			.append('<td>' + file.name + '</td>')
-			.append('<td>' + formatFileSize(file.size) + '</td>')
-			.append('<td><input type="checkbox" class="status" /></td>')
-			.append('<td><a class="download btn btn-link" href="#" download="' + resultname + '">Télécharger</a></td>')
-			.appendTo('#cipher-table > tbody');
-
-		tr.find('input:checkbox').prop('checked', encrypted).bootstrapSwitch({
-			onText: 'Chiffré',
-			onColor: 'success',
-			offText: 'Déchiffré',
-			offColor: 'warning'
-		});
+		$('<tr>'
+				+ '  <td class="name"></td>'
+				+ '  <td class="size"></td>'
+				+ '  <td class="status">'
+				+ '    <div class="custom-control custom-switch">'
+				+ '      <input type="checkbox" class="custom-control-input">'
+				+ '      <label class="custom-control-label">Chiffré</label>'
+				+ '    </div>'
+				+ '  </td>'
+				+ '  <td>'
+				+ '    <a class="download btn btn-link" href="#">Télécharger</a>'
+				+ '  </td>'
+				+ '</tr>')
+				.data('file', file)
+				.find('td.name').text(file.name).end()
+				.find('td.size').text(formatFileSize(file.size)).end()
+				.find('.custom-control-input').attr('id', 'check' + i).prop('checked', encrypted).end()
+				.find('.custom-control-label').attr('for', 'check' + i).end()
+				.find('a.download').attr('download', resultname).end()
+				.appendTo(tbody);
+		i++;
 	});
 }
 
@@ -255,11 +264,11 @@ $(function() {
 		var input = $('#cipher-passphrase-input').focus(),
 			passphrase = input.val();
 
-		input.parent().toggleClass('has-error', !passphrase);
+		input.toggleClass('is-invalid', !passphrase);
 		if (!passphrase)
 			return;
 
-		var rows = $('#cipher-table > tbody > tr:not(.success)').get(),
+		var rows = $('#cipher-table > table > tbody > tr:not(.success)').get(),
 			files = rows.map(function(tr) { return $(tr).data('file'); }),
 			algorithm = {
 				name: 'AES-GCM',
@@ -271,12 +280,12 @@ $(function() {
 
 		$('#cipher-passphrase-modal').modal('hide');
 		new Cipher(files, passphrase, algorithm, new Progress($('#cipher-progress').children()), function(file, index, cipherText) {
-			$(rows[index]).addClass('success').find('a.download').attr('href', 'data:text/plain;base64,' + forge.util.encode64(cipherText));
+			$(rows[index]).addClass('table-success').find('a.download').attr('href', 'data:application/octet-stream;base64,' + forge.util.encode64(cipherText)).show();
 		});
 	});
 
 	$('#cipher-clear-button').on('click', function() {
-		$('#cipher-table > tbody').empty();
+		$('#cipher-table > table > tbody').empty();
 		$('#cipher-launch-button, #cipher-clear-button').hide();
 	});
 });

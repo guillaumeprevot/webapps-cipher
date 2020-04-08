@@ -4,24 +4,55 @@ File encryption using AES 256 bits in GCM mode
 
 ## Présentation
 
-[Cette application](https://techgp.fr/webapps/webapps-cipher.html) écrite en HTML5, JavaScript et CSS3 vous permettra de chiffrer/déchiffrer des fichiers sensibles sans avoir besoin d'installer un programme. Tout se passe dans le navigateur.
+[Cette application](https://techgp.fr:9005/webapps-cipher/webapps-cipher.html) écrite en HTML5, JavaScript et CSS3 vous permettra de chiffrer/déchiffrer des fichiers sensibles sans avoir besoin d'installer un programme. Tout se passe dans le navigateur.
 
 L'application utilise les algorithmes suivants :
 
-- [PBKDF2](https://fr.wikipedia.org/wiki/PBKDF2), [HMAC](https://fr.wikipedia.org/wiki/Keyed-Hash_Message_Authentication_Code) et [SHA-1](https://fr.wikipedia.org/wiki/SHA-1) pour générer la clef à partir de la phrase de passe
+- [PBKDF2](https://fr.wikipedia.org/wiki/PBKDF2), [HMAC](https://fr.wikipedia.org/wiki/Keyed-Hash_Message_Authentication_Code) et [SHA-256](https://fr.wikipedia.org/wiki/SHA-2#SHA-256) pour générer la clef à partir de la phrase de passe
 - [AES 256 bits](https://fr.wikipedia.org/wiki/Advanced_Encryption_Standard) avec une clef de 256 bits, en mode [GCM](https://fr.wikipedia.org/wiki/Galois/Counter_Mode) pour le chiffrement
 
 Les librairies suivantes ont été utilisées pour cette application :
 
-- [Forge 0.7.6](https://github.com/digitalbazaar/forge)
-- [jQuery 3.3.1](https://jquery.com/)
-- [Bootstrap 3.3.7](https://getbootstrap.com/docs/3.3/components/)
-- [Bootstrap Switch 3.3.4](https://github.com/nostalgiaz/bootstrap-switch)
+- [Forge 0.9.1](https://github.com/digitalbazaar/forge)
+- [jQuery 3.4.1](https://jquery.com/)
+- [Bootstrap 4.4.1](https://getbootstrap.com/)
+- [Popper 1.16.1](https://popper.js.org/), dépendance de Bootstrap 4
+- [Material Icons](https://material.io/tools/icons) pour les boutons
 - [DryIcons](https://dryicons.com/) pour le favicon
 
-L'application est fournie avec un fichier manifest `webapps-cipher.appcache` permettant la mise en cache et l'utilisation en mode déconnecté. Plus d'info chez Mozilla [en français](https://developer.mozilla.org/fr/docs/Utiliser_Application_Cache) ou [en anglais](https://developer.mozilla.org/en-US/docs/Web/HTML/Using_the_application_cache).
+## Compilation de Forge
 
-NB : quand le certificat HTTPS est incorrect, la mise en cache échouera sous Chrome avec l'erreur `Manifest fetch Failed (9)`. Dans ce cas, faites les tests en HTTP et/ou utilisez un certificat valide en production.
+La version de `Forge` utilisée a été recompilée manuellement pour n'inclure que ce qui nous intéresse (PBKDF2, SHA-1, SHA-256 et random)
+
+- récupérer le repository
+
+```bash
+git clone --depth 1 --branch 0.9.1 https://github.com/digitalbazaar/forge.git
+cd forge
+```
+
+- ajouter une cible webpack personnalisée dans `webpack.config.js` :
+
+```javascript
+const outputs = [
+
+  {
+    entry: ['./lib/pbkdf2.js', './lib/sha1.js', './lib/sha256.js', './lib/random.js', './lib/forge.js'],
+    filenameBase: 'forge-custom-cipher',
+    libraryTarget: 'umd'
+  }
+
+];
+```
+
+- construire Forge
+
+```bash
+npm install
+npm run build
+```
+
+Le résultat se trouve dans le dossier `dist`
 
 ## Captures d'écran
 
@@ -59,3 +90,8 @@ Ce projet est distribué sous licence MIT, reproduite dans le fichier LICENSE ic
 - 2018-08-25 : modification du message en cas de mot de passe incorrect au déchiffrement
 - 2018-08-25 : mise à jour de jQuery (3.2.1 => 3.3.1) et Forge (0.6.49 => 0.7.6) et renommage de "bootstrap" en "bootstrap3"
 - 2018-08-25 : passage des liens en HTTPS
+- 2020-04-08 : migration vers un Service Worker au lieu de Application Cache
+- 2020-04-08 : migration vers Bootstrap 4 (4.4.1), intégration de Popper (1.16.1), mise à jour de jQuery (3.4.1)
+- 2020-04-08 : mise à jour et optimisation de Forge (0.9.1) en créant une cible webpack personnalisée 
+- 2020-04-08 : suppression des dépendances vers Bootstrap Switch et Glyphicons, remplacée par des svg de Material Icons
+- 2020-04-08 : correction du téléchargement de fichiers déchiffrés, qui ajoutait une extension ".txt" non souhaitée
