@@ -8,13 +8,13 @@ File encryption using AES 256 bits in GCM mode
 
 L'application utilise les algorithmes suivants :
 
-- [PBKDF2](https://fr.wikipedia.org/wiki/PBKDF2), [HMAC](https://fr.wikipedia.org/wiki/Keyed-Hash_Message_Authentication_Code) et [SHA-256](https://fr.wikipedia.org/wiki/SHA-2#SHA-256) pour générer la clef à partir de la phrase de passe
+- [PBKDF2](https://fr.wikipedia.org/wiki/PBKDF2), [HMAC](https://fr.wikipedia.org/wiki/Keyed-Hash_Message_Authentication_Code) et [SHA-1](https://fr.wikipedia.org/wiki/SHA-1) pour générer la clef à partir de la phrase de passe
 - [AES 256 bits](https://fr.wikipedia.org/wiki/Advanced_Encryption_Standard) avec une clef de 256 bits, en mode [GCM](https://fr.wikipedia.org/wiki/Galois/Counter_Mode) pour le chiffrement
 
 Les librairies suivantes ont été utilisées pour cette application :
 
 - [Forge 0.9.1](https://github.com/digitalbazaar/forge)
-- [jQuery 3.4.1](https://jquery.com/)
+- [jQuery 3.5.0](https://jquery.com/)
 - [Bootstrap 4.4.1](https://getbootstrap.com/)
 - [Popper 1.16.1](https://popper.js.org/), dépendance de Bootstrap 4
 - [Material Icons](https://material.io/tools/icons) pour les boutons
@@ -72,10 +72,6 @@ Le résultat se trouve dans le dossier `dist`
 
 ![Récupération du résultat](./screenshots/webapps-cipher-4.png)
 
-### IHM adaptée aux petits écrans
-
-![IHM adaptée aux petits écrans](./screenshots/webapps-cipher-5.png)
-
 ## Licence
 
 Ce projet est distribué sous licence MIT, reproduite dans le fichier LICENSE ici présent.
@@ -95,4 +91,5 @@ Ce projet est distribué sous licence MIT, reproduite dans le fichier LICENSE ic
 - 2020-04-08 : mise à jour et optimisation de Forge (0.9.1) en créant une cible webpack personnalisée 
 - 2020-04-08 : suppression des dépendances vers Bootstrap Switch et Glyphicons, remplacée par des svg de Material Icons
 - 2020-04-08 : correction du téléchargement de fichiers déchiffrés, qui ajoutait une extension ".txt" non souhaitée
-- 2020-04-12 : passage du Service Worker en mode "server first" + mise à jour de jQuery (3.5.0) 
+- 2020-04-12 : passage du Service Worker en mode "server first" + mise à jour de jQuery (3.5.0)
+- 2020-04-12 : mise à jour de README.md et des captures d'écran + désactivation des switch qui ne servent qu'à informer

@@ -205,7 +205,7 @@ function addFiles(files) {
 				+ '  <td class="size"></td>'
 				+ '  <td class="status">'
 				+ '    <div class="custom-control custom-switch">'
-				+ '      <input type="checkbox" class="custom-control-input">'
+				+ '      <input type="checkbox" disabled class="custom-control-input">'
 				+ '      <label class="custom-control-label">Chiffré</label>'
 				+ '    </div>'
 				+ '  </td>'
