@@ -95,3 +95,4 @@ Ce projet est distribué sous licence MIT, reproduite dans le fichier LICENSE ic
 - 2020-04-08 : mise à jour et optimisation de Forge (0.9.1) en créant une cible webpack personnalisée 
 - 2020-04-08 : suppression des dépendances vers Bootstrap Switch et Glyphicons, remplacée par des svg de Material Icons
 - 2020-04-08 : correction du téléchargement de fichiers déchiffrés, qui ajoutait une extension ".txt" non souhaitée
+- 2020-04-12 : passage du Service Worker en mode "server first" + mise à jour de jQuery (3.5.0) 

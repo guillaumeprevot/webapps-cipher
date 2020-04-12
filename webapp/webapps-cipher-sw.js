@@ -3,7 +3,8 @@
  * - GOOGLE : https://developers.google.com/web/fundamentals/primers/service-workers/#update-a-service-worker
  * - MOZILLA : https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers
  */
-var cacheName = 'v1';
+var cacheName = 'v3';
+var serverFirst = true;
 var baseCacheContent = [
 	'./libs/bootstrap/css/bootstrap.min.css',
 	'./libs/bootstrap/js/bootstrap.min.js',
@@ -26,6 +27,44 @@ function info(text) {
 
 function trace(text) {
 	// console.log('Service Worker : ' + text);
+}
+
+function fetchFromCache(event) {
+	trace('fetching from cache for ' + event.request.url);
+	return caches.match(event.request).then(function(response) {
+		if (! response)
+			throw new Error('failed from cache');
+		trace('fetched from cache ' + event.request.url);
+		return response;
+	});
+}
+
+function fetchFromServer(event, timeout) {
+	trace('fetching from server for ' + event.request.url);
+	var promise, abortController, abortTimeout;
+	if (timeout) {
+		// https://developer.mozilla.org/en-US/docs/Web/API/AbortController
+		abortController = new AbortController();
+		abortTimeout = setTimeout(() => abortController.abort(), timeout);
+		promise = fetch(event.request, { signal: abortController.signal });
+	} else {
+		promise = fetch(event.request);
+	}
+	return promise.then(function(response) {
+		if (abortTimeout)
+			clearTimeout(abortTimeout);
+		if (!response || response.status !== 200 || response.type !== 'basic')
+			throw new Error('failed from server');
+
+		trace('fetched from server ' + event.request.url);
+		// Clone the response : one to return, one for cache
+		var responseToCache = response.clone();
+		caches.open(cacheName).then(function(cache) {
+			trace('caching response for ' + event.request.url);
+			cache.put(event.request, responseToCache);
+		});
+		return response;
+	});
 }
 
 self.addEventListener('install', function(event) {
@@ -55,22 +94,13 @@ self.addEventListener('activate', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
-	event.respondWith(caches.match(event.request).then(function(response) {
-		if (response) {
-			trace('using cache for ' + event.request.url);
-			return response;
-		}
-		trace('fetching data for ' + event.request.url);
-		return fetch(event.request).then(function(response) {
-			if (!response || response.status !== 200 || response.type !== 'basic')
-				return response;
-			// Clone the response : one to return, one for cache
-			var responseToCache = response.clone();
-			caches.open(cacheName).then(function(cache) {
-				trace('caching response for ' + event.request.url);
-				cache.put(event.request, responseToCache);
-			});
-			return response;
-		});
-	}));
+	if (serverFirst) {
+		event.respondWith(fetchFromServer(event, 300)
+			.catch(() => fetchFromCache(event))
+			.catch(() => trace('fetch failed for ' + event.request.url)));
+	} else {
+		event.respondWith(fetchFromCache(event)
+			.catch(() => fetchFromServer(event, null))
+			.catch(() => trace('fetch failed for ' + event.request.url)));
+	}
 });
