@@ -4,7 +4,7 @@ File encryption using AES 256 bits in GCM mode
 
 ## Présentation
 
-[Cette application](https://techgp.fr:9005/webapps-cipher/webapps-cipher.html) écrite en HTML5, JavaScript et CSS3 vous permettra de chiffrer/déchiffrer des fichiers sensibles sans avoir besoin d'installer un programme. Tout se passe dans le navigateur.
+Cette application écrite en HTML5, JavaScript et CSS3 vous permettra de chiffrer/déchiffrer des fichiers sensibles sans avoir besoin d'installer un programme. Tout se passe dans le navigateur.
 
 L'application utilise les algorithmes suivants :
 
@@ -19,6 +19,9 @@ Les librairies suivantes ont été utilisées pour cette application :
 - [Popper 1.16.1](https://popper.js.org/), dépendance de Bootstrap 4
 - [Material Icons](https://material.io/tools/icons) pour les boutons
 - [DryIcons](https://dryicons.com/) pour le favicon
+
+L'application devrait fonctionner correctement est mode déconnecté grâce aux **Service Workers** sous Chrome, Firefox et [d'autres](https://caniuse.com/#search=service+worker).
+Plus d'infos chez [Google](https://developers.google.com/web/fundamentals/primers/service-workers/) ou [Mozilla](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers).
 
 ## Compilation de Forge
 
