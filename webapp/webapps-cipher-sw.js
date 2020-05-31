@@ -53,8 +53,8 @@ function fetchFromServer(event, timeout) {
 	return promise.then(function(response) {
 		if (abortTimeout)
 			clearTimeout(abortTimeout);
-		if (!response || response.status !== 200 || response.type !== 'basic')
-			throw new Error('failed from server');
+		if (response.status !== 200 || response.type !== 'basic')
+			return response;
 
 		trace('fetched from server ' + event.request.url);
 		// Clone the response : one to return, one for cache
@@ -65,6 +65,12 @@ function fetchFromServer(event, timeout) {
 		});
 		return response;
 	});
+}
+
+function failed(event) {
+	trace('fetch failed for ' + event.request.url)
+	// https://developer.mozilla.org/en-US/docs/Web/API/Response/Response
+	return new Response('');
 }
 
 self.addEventListener('install', function(event) {
@@ -97,10 +103,10 @@ self.addEventListener('fetch', function(event) {
 	if (serverFirst) {
 		event.respondWith(fetchFromServer(event, 300)
 			.catch(() => fetchFromCache(event))
-			.catch(() => trace('fetch failed for ' + event.request.url)));
+			.catch(() => failed(event)));
 	} else {
 		event.respondWith(fetchFromCache(event)
 			.catch(() => fetchFromServer(event, null))
-			.catch(() => trace('fetch failed for ' + event.request.url)));
+			.catch(() => failed(event)));
 	}
 });
